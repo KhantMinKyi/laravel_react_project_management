@@ -17,8 +17,8 @@ function Index({ projects }) {
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
             <div className="p-6 text-gray-900 dark:text-gray-100">
               {/* <pre>{JSON.stringify(projects, undefined, 2)}</pre> */}
-              <table className="w-full text-sm text-left text-gray-800 dark:text-gray-300 ">
-                <thead className="text-md text-purple-700 uppercase dark:text-purple-300">
+              <table className="w-full text-sm text-left text-gray-800 rounded-sm dark:text-gray-300 ">
+                <thead className="text-md text-purple-700 bg-gray-50 dark:bg-gray-700 uppercase dark:text-purple-300">
                   <tr className="text-nowrap ">
                     <th className="px-3 py-2">#</th>
                     {/* <th className="px-3 py-2">Image</th> */}
@@ -27,12 +27,19 @@ function Index({ projects }) {
                     <th className="px-3 py-2">Created Date</th>
                     <th className="px-3 py-2">Due Date</th>
                     <th className="px-3 py-2">Created By</th>
-                    <th className="px-3 py-2">Actions</th>
+                    <th className="px-3 py-2 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="text-sm">
-                  {projects.data.map((project) => (
-                    <tr className="bg-white dark:bg-gray-800">
+                  {projects.data.map((project, index) => (
+                    <tr
+                      className={`${
+                        index % 2 === 1
+                          ? "bg-gray-50 dark:bg-gray-700"
+                          : "bg-gray-100 dark:bg-gray-800"
+                      } `}
+                      key={index}
+                    >
                       <td className="px-3 py-2">{project.id}</td>
                       {/* <td className="px-3 py-2">
                         <img></img>
@@ -42,7 +49,10 @@ function Index({ projects }) {
                       <td className="px-3 py-2">{project.created_at}</td>
                       <td className="px-3 py-2">{project.due_date}</td>
                       <td className="px-3 py-2">{project.createdBy.name}</td>
-                      <td className="px-3 py-2"></td>
+                      <td className="px-3 py-2">
+                        <span className="text-yellow-600 me-3">Update</span>
+                        <span className="text-red-600">Delete</span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
