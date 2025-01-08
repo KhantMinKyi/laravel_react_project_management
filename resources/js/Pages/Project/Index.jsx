@@ -56,22 +56,22 @@ function Index({ projects, queryParams = null }) {
         <div className="mx-auto  sm:px-6 lg:px-8">
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <div className="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md p-4 rounded-lg bg-clip-border">
+              <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white dark:bg-gray-800 shadow-md p-4 rounded-lg bg-clip-border">
                 {/* <pre>{JSON.stringify(projects, undefined, 2)}</pre> */}
-                <table className="w-full table-auto min-w-max text-sm text-left text-gray-800 rounded-sm dark:text-gray-300 ">
-                  <thead className="text-md text-purple-700 dark:bg-gray-700 uppercase dark:text-purple-300">
+                <table className="w-full table-auto min-w-max text-sm text-left text-gray-800 rounded-lg dark:text-gray-300">
+                  <thead className="text-md text-purple-700 dark:bg-gray-700 uppercase dark:text-purple-300 ">
                     <tr className="text-nowrap ">
                       <th
                         onClick={(e) => sortChanged("id")}
                         className={
-                          "flex items-center " +
+                          "flex items-center px-3 py-2 cursor-pointer" +
                           (queryParams.sort_field === "id"
-                            ? " text-indigo-700 mb-2"
+                            ? " text-indigo-700 dark:text-white mb-2"
                             : " ")
                         }
                       >
                         #
-                        <div>
+                        <div className="ml-1">
                           <ChevronUpIcon className="w-4" />
                           <ChevronDownIcon className="w-4 -mt-2" />
                         </div>
@@ -80,18 +80,18 @@ function Index({ projects, queryParams = null }) {
                       <th className="px-3 py-2">Image</th>
                       <th
                         onClick={(e) => sortChanged("name")}
-                        className="px-3 py-2 "
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "name"
-                              ? " text-indigo-700 mb-2 "
+                              ? " text-indigo-700 dark:text-white mb-2 "
                               : " ")
                           }
                         >
                           Name
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -99,18 +99,18 @@ function Index({ projects, queryParams = null }) {
                       </th>
                       <th
                         onClick={(e) => sortChanged("status")}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "status"
-                              ? " text-indigo-700 mb-2"
+                              ? " text-indigo-700 dark:text-white mb-2"
                               : " ")
                           }
                         >
                           Status
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -118,18 +118,18 @@ function Index({ projects, queryParams = null }) {
                       </th>
                       <th
                         onClick={(e) => sortChanged("created_at")}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "created_at"
-                              ? " text-indigo-700 mb-2"
+                              ? " text-indigo-700 dark:text-white mb-2"
                               : " ")
                           }
                         >
                           Created Date
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -137,18 +137,18 @@ function Index({ projects, queryParams = null }) {
                       </th>
                       <th
                         onClick={(e) => sortChanged("due_date")}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "due_date"
-                              ? " text-indigo-700 mb-2"
+                              ? " text-indigo-700 dark:text-white mb-2"
                               : " ")
                           }
                         >
                           Due Date
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -156,18 +156,18 @@ function Index({ projects, queryParams = null }) {
                       </th>
                       <th
                         onClick={(e) => sortChanged("created_by")}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "created_by"
-                              ? " text-indigo-700 mb-2"
+                              ? " text-indigo-700 dark:text-white mb-2"
                               : " ")
                           }
                         >
                           Created By
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -175,18 +175,18 @@ function Index({ projects, queryParams = null }) {
                       </th>
                       <th
                         onClick={(e) => sortChanged("is_active")}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         <div
                           className={
                             "flex items-center " +
                             (queryParams.sort_field === "is_active"
-                              ? " text-indigo-700 mb-2"
+                              ? " text-indigo-700 dark:text-white mb-2"
                               : " ")
                           }
                         >
                           Active
-                          <div>
+                          <div className="ml-1">
                             <ChevronUpIcon className="w-4" />
                             <ChevronDownIcon className="w-4 -mt-2" />
                           </div>
@@ -222,6 +222,7 @@ function Index({ projects, queryParams = null }) {
                           <option value="pending"> Pending</option>
                           <option value="in_progress"> In Progress</option>
                           <option value="completed"> Completed</option>
+                          <option value="canceled"> Canceled</option>
                         </SelectInput>
                       </th>
                       <th className="px-3 py-2"></th>
