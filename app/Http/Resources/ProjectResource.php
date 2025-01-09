@@ -25,7 +25,8 @@ class ProjectResource extends JsonResource
             'image_path' => $this->image_path,
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
-            'is_active' => $this->is_active
+            'is_active' => $this->is_active,
+            'tasks_count' => $this->tasks_count
         ];
     }
 }
