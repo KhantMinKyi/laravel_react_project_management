@@ -112,12 +112,12 @@ function Index({ tasks, queryParams = null }) {
                         Due Date
                       </TableHeading>
                       <TableHeading
-                        name="created_by"
+                        name="assigned_user_id"
                         sort_field={queryParams.sort_field}
                         sort_direction={queryParams.sort_direction}
                         sortChanged={sortChanged}
                       >
-                        Created By
+                        Assigned By
                       </TableHeading>
                       <TableHeading
                         name="priority"
@@ -210,7 +210,7 @@ function Index({ tasks, queryParams = null }) {
                         </td>
                         <td className="px-3 py-2">{task.created_at}</td>
                         <td className="px-3 py-2">{task.due_date}</td>
-                        <td className="px-3 py-2">{task.createdBy.name}</td>
+                        <td className="px-3 py-2">{task.assignedBy.name}</td>
                         <td className="px-3 py-2">
                           <span
                             className={
