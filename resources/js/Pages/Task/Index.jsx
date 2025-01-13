@@ -17,39 +17,6 @@ import TasksTable from "./TasksTable";
 function Index({ tasks, queryParams = null }) {
   queryParams = queryParams || {};
 
-  const searchFieldChange = (name, value) => {
-    if (value) {
-      queryParams[name] = value;
-    } else {
-      delete queryParams[name];
-    }
-    // console.log(queryParams);
-
-    router.get(route("tasks.index"), queryParams);
-  };
-
-  const onKeyPress = (name, e) => {
-    if (e.key !== "Enter") return;
-
-    searchFieldChange(name, e.target.value);
-  };
-
-  const sortChanged = (name) => {
-    if (name === queryParams.sort_field) {
-      if (queryParams.sort_direction == "asc") {
-        queryParams.sort_direction = "desc";
-      } else {
-        queryParams.sort_direction = "asc";
-      }
-    } else {
-      queryParams.sort_field = name;
-      queryParams.sort_direction = "asc";
-    }
-    const divClass = document.getElementById(name);
-    // div.className = "mt-4";
-
-    router.get(route("tasks.index"), queryParams);
-  };
   return (
     <AuthenticatedLayout
       header={
@@ -63,13 +30,7 @@ function Index({ tasks, queryParams = null }) {
         <div className="mx-auto  sm:px-6 lg:px-8">
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <TasksTable
-                tasks={tasks}
-                queryParams={queryParams}
-                sortChanged={sortChanged}
-                onKeyPress={onKeyPress}
-                searchFieldChange={searchFieldChange}
-              />
+              <TasksTable tasks={tasks} queryParams={queryParams} />
             </div>
           </div>
         </div>

@@ -8,16 +8,69 @@ import {
   TASK_STATUS_CLASS_MAP,
   TASK_STATUS_TEXT_MAP,
 } from "@/constants";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import React from "react";
 
-function TasksTable({
-  tasks,
-  queryParams = null,
-  sortChanged = () => {},
-  onKeyPress = () => {},
-  searchFieldChange = () => {},
-}) {
+function TasksTable({ tasks, queryParams = null, project = null }) {
+  queryParams = queryParams || {};
+  project = project || {};
+  const searchFieldChange = (name, value) => {
+    if (value) {
+      queryParams[name] = value;
+    } else {
+      delete queryParams[name];
+    }
+    // console.log(project);
+    // console.log(queryParams);
+    if (project && project.id) {
+      router.get(
+        route("projects.show", {
+          project: project.id,
+          name: queryParams.name,
+          status: queryParams.status,
+          priority: queryParams.priority,
+        }),
+        {},
+        { preserveScroll: true }
+      );
+    } else {
+      router.get(route("tasks.index"), queryParams);
+    }
+  };
+
+  const onKeyPress = (name, e) => {
+    if (e.key !== "Enter") return;
+
+    searchFieldChange(name, e.target.value);
+  };
+
+  const sortChanged = (name) => {
+    if (name === queryParams.sort_field) {
+      if (queryParams.sort_direction == "asc") {
+        queryParams.sort_direction = "desc";
+      } else {
+        queryParams.sort_direction = "asc";
+      }
+    } else {
+      queryParams.sort_field = name;
+      queryParams.sort_direction = "asc";
+    }
+    const divClass = document.getElementById(name);
+    // div.className = "mt-4";
+    if (project && project.id) {
+      router.get(
+        route("projects.show", {
+          project: project.id,
+          sort_direction: queryParams.sort_direction,
+          sort_field: queryParams.sort_field,
+        }),
+        {},
+        { preserveScroll: true }
+      );
+    } else {
+      router.get(route("tasks.index"), queryParams, { preserveScroll: true });
+    }
+  };
   return (
     <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white dark:bg-gray-800 shadow-md p-4 rounded-lg bg-clip-border">
       {/* <pre>{JSON.stringify(tasks, undefined, 2)}</pre> */}
