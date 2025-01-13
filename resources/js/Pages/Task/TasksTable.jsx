@@ -11,7 +11,12 @@ import {
 import { Link, router } from "@inertiajs/react";
 import React from "react";
 
-function TasksTable({ tasks, queryParams = null, project = null }) {
+function TasksTable({
+  tasks,
+  queryParams = null,
+  project = null,
+  hideProjectColumn = false,
+}) {
   queryParams = queryParams || {};
   project = project || {};
   const searchFieldChange = (name, value) => {
@@ -89,6 +94,16 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
             <TableHeading name="image_path" sortable={false}>
               Image
             </TableHeading>
+            {!hideProjectColumn && (
+              <TableHeading
+                name="project_id"
+                sort_field={queryParams.sort_field}
+                sort_direction={queryParams.sort_direction}
+                sortChanged={sortChanged}
+              >
+                Project Name
+              </TableHeading>
+            )}
             <TableHeading
               name="name"
               sort_field={queryParams.sort_field}
@@ -129,6 +144,16 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
             >
               Assigned By
             </TableHeading>
+            {hideProjectColumn && (
+              <TableHeading
+                name="assigned_to_user_id"
+                sort_field={queryParams.sort_field}
+                sort_direction={queryParams.sort_direction}
+                sortChanged={sortChanged}
+              >
+                Assigned To
+              </TableHeading>
+            )}
             <TableHeading
               name="priority"
               sort_field={queryParams.sort_field}
@@ -146,6 +171,7 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
           <tr className="text-nowrap ">
             <th className="px-3 py-2"></th>
             <th className="px-3 py-2"></th>
+            {!hideProjectColumn && <th className="px-3 py-2"></th>}
             <th className="px-3 py-2">
               <TextInput
                 className="w-full"
@@ -173,6 +199,7 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
             <th className="px-3 py-2"></th>
             <th className="px-3 py-2"></th>
             <th className="px-3 py-2"></th>
+            {hideProjectColumn && <th className="px-3 py-2"></th>}
             <th className="px-3 py-2">
               {" "}
               <SelectInput
@@ -205,6 +232,13 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
               <td className="px-3 py-2">
                 <img src={task.image_path} style={{ width: 60 }} />
               </td>
+              {!hideProjectColumn && (
+                <td className="px-3 py-2 hover:underline text-purple-600 dark:text-purple-200">
+                  <Link href={route("projects.show", task.project.id)}>
+                    {task.project.name}{" "}
+                  </Link>
+                </td>
+              )}
               <td className="px-3 py-2">{task.name}</td>
               <td className="px-3 py-2 text-nowrap">
                 <span
@@ -219,6 +253,9 @@ function TasksTable({ tasks, queryParams = null, project = null }) {
               <td className="px-3 py-2">{task.created_at}</td>
               <td className="px-3 py-2">{task.due_date}</td>
               <td className="px-3 py-2">{task.assignedBy.name}</td>
+              {hideProjectColumn && (
+                <td className="px-3 py-2">{task.assignedTo.name}</td>
+              )}
               <td className="px-3 py-2">
                 <span
                   className={

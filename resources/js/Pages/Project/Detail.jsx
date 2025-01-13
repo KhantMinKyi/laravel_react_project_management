@@ -80,6 +80,7 @@ export default function Detail({ project, tasks, queryParams = null }) {
                 tasks={tasks}
                 queryParams={queryParams}
                 project={project}
+                hideProjectColumn={true}
               />
             </div>
           </div>

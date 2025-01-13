@@ -11,7 +11,7 @@ class Task extends Model
     use HasFactory;
     public function project()
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Project::class);
     }
 
 
@@ -26,5 +26,9 @@ class Task extends Model
     public function assignedBy()
     {
         return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to_user_id');
     }
 }
