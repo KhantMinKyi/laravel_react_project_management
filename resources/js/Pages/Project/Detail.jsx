@@ -15,18 +15,18 @@ export default function Detail({ project }) {
       <div className="py-12">
         <div className="mx-auto  sm:px-6 lg:px-8">
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+            <div>
+              {project.image_path ? (
+                <img
+                  src={project.image_path}
+                  alt=""
+                  className="w-full h-64 object-cover"
+                />
+              ) : (
+                " "
+              )}
+            </div>
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <div>
-                {project.image_path ? (
-                  <img
-                    src={project.image_path}
-                    alt=""
-                    className="w-full h-64 object-cover"
-                  />
-                ) : (
-                  " "
-                )}
-              </div>
               <div className="grid gap-1 grid-cols-2 mt-2">
                 <div>
                   <div>
@@ -69,6 +69,27 @@ export default function Detail({ project }) {
               <div className="mt-4">
                 <label className="font-bold text-lg">Description</label>
                 <p className="mt-1">{project.description}</p>
+              </div>
+              <hr className="mt-4"></hr>
+              <div className="m-4 text-lg font-bold">Tasks</div>
+              <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white dark:bg-gray-800 shadow-md p-4 rounded-lg bg-clip-border">
+                {/* <pre>{JSON.stringify(projects, undefined, 2)}</pre> */}
+                <table className="w-full table-auto min-w-max text-sm text-left text-gray-800 rounded-lg dark:text-gray-300">
+                  <thead className="text-md text-purple-700 dark:bg-gray-700 uppercase dark:text-purple-300 ">
+                    <tr>
+                      <th>1</th>
+                      <th>1</th>
+                      <th>1</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2</td>
+                      <td>2</td>
+                      <td>2</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
