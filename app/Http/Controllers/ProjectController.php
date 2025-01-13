@@ -53,7 +53,11 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        // $project = Project::find($project->id);
+        // dd($project);
+        return inertia("Project/Detail", [
+            'project' => new ProjectResource($project),
+        ]);
     }
 
     /**
