@@ -167,7 +167,7 @@ function Index({ projects, queryParams = null }) {
                   <tbody className="text-sm">
                     {projects.data.map((project, index) => (
                       <tr
-                        className={`${
+                        className={`h-16 ${
                           index % 2 === 1
                             ? " dark:bg-gray-700"
                             : "bg-gray-50 dark:bg-gray-800"
