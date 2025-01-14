@@ -5,12 +5,22 @@ import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableHeading from "@/Components/TableHeading";
 
-function Index({ projects, queryParams = null }) {
+function Index({ projects, queryParams = null, success }) {
   queryParams = queryParams || {};
 
+  const [clientSuccess, setClientSuccess] = useState(success);
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setClientSuccess(""); // Clear success message after 3 seconds
+      }, 3000);
+
+      return () => clearTimeout(timer); // Cleanup timeout on component unmount or success update
+    }
+  }, [success]);
   const searchFieldChange = (name, value) => {
     if (value) {
       queryParams[name] = value;
@@ -47,14 +57,27 @@ function Index({ projects, queryParams = null }) {
   return (
     <AuthenticatedLayout
       header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-          Projects
-        </h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+            Projects
+          </h2>
+          <Link
+            href={route("projects.create")}
+            className=" py-2 px-4 text-white bg-purple-600 dark:bg-purple-900 rounded hover:shadow-lg transition-all hover:bg-purple-800 dark:hover:bg-purple-700"
+          >
+            Add Project
+          </Link>
+        </div>
       }
     >
       <Head title="Projects" />
       <div className="py-12">
         <div className="mx-auto  sm:px-6 lg:px-8">
+          {clientSuccess && (
+            <div className="bg-green-400 text-white w-1/3 rounded py-2 px-2 shadow-lg text-center mb-4 ml-auto">
+              {success}
+            </div>
+          )}
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white dark:bg-gray-800 shadow-md p-4 rounded-lg bg-clip-border">
