@@ -54,6 +54,14 @@ function Index({ projects, queryParams = null, success }) {
 
     router.get(route("projects.index"), queryParams);
   };
+
+  const deleteProject = (project) => {
+    if (!window.confirm("Are you sure you want to delete this project?")) {
+      return;
+    } else {
+      router.delete(route("projects.destroy", project));
+    }
+  };
   return (
     <AuthenticatedLayout
       header={
@@ -230,12 +238,12 @@ function Index({ projects, queryParams = null, success }) {
                           >
                             Update
                           </Link>
-                          <Link
-                            href={route("projects.destroy", project.id)}
+                          <button
+                            onClick={(e) => deleteProject(project)}
                             className="text-red-600 me-3"
                           >
                             Delete
-                          </Link>
+                          </button>
                         </td>
                       </tr>
                     ))}

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -109,6 +110,16 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        // dd($project);
+        $name = $project->name;
+        $directory = dirname($project->image_path);
+
+        // Delete the image
+        Storage::disk('public')->delete($project->image_path);
+
+        // Delete the folder (if empty)
+        Storage::disk('public')->deleteDirectory($directory);
+        $project->delete();
+        return to_route('projects.index')->with('success', 'Project - ' . $name . ' was Deleted');
     }
 }
