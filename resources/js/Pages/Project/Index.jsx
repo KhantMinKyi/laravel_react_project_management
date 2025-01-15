@@ -14,10 +14,10 @@ function Index({ projects, queryParams = null, success }) {
   const [clientSuccess, setClientSuccess] = useState(success);
   useEffect(() => {
     if (success) {
+      setClientSuccess(success);
       const timer = setTimeout(() => {
         setClientSuccess(""); // Clear success message after 3 seconds
       }, 3000);
-
       return () => clearTimeout(timer); // Cleanup timeout on component unmount or success update
     }
   }, [success]);
@@ -83,7 +83,7 @@ function Index({ projects, queryParams = null, success }) {
         <div className="mx-auto  sm:px-6 lg:px-8">
           {clientSuccess && (
             <div className="bg-green-400 text-white w-1/3 rounded py-2 px-2 shadow-lg text-center mb-4 ml-auto">
-              {success}
+              {clientSuccess}
             </div>
           )}
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
@@ -233,7 +233,7 @@ function Index({ projects, queryParams = null, success }) {
                         </td>
                         <td className="px-3 py-2">
                           <Link
-                            href={route("projects.edit", project.id)}
+                            href={route("projects.edit", project)}
                             className="text-yellow-600 me-3"
                           >
                             Update

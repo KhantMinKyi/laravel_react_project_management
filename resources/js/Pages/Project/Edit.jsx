@@ -8,27 +8,30 @@ import { ArrowPathIcon } from "@heroicons/react/16/solid";
 import { Head, Link, useForm } from "@inertiajs/react";
 import React from "react";
 
-function Create() {
+function Edit({ project }) {
   const { data, setData, post, errors, reset } = useForm({
+    // image_path: project.image_path || "",
+    name: project.name || "",
+    status: project.status || "",
+    description: project.description || "",
+    due_date: project.due_date || "",
     image: "",
-    name: "",
-    status: "",
-    description: "",
-    due_date: "",
+    _method: "PUT",
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(data);
+    console.log(project);
 
-    // post(route("projects.store"));
+    post(route("projects.update", project.id));
   };
   return (
     <AuthenticatedLayout
       header={
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            Create new Project
+            Edit Project - " {project.name} "
           </h2>
         </div>
       }
@@ -44,7 +47,7 @@ function Create() {
                   className="p-4 sm-p8 bg-white dark:bg-gray-800 shadow:sm rounded-lg"
                 >
                   <div className="flex justify-end mr-2">
-                    <Link href={route("projects.create")}>
+                    <Link href={route("projects.edit", project)}>
                       <ArrowPathIcon
                         className="w-4 cursor-pointer"
                         title="Reset Inputs"
@@ -136,12 +139,18 @@ function Create() {
                       type="submit"
                       className="py-2 px-4 bg-green-600 text-white rounded shadow transition-all hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600"
                     >
-                      Create
+                      Edit
                     </button>
                   </div>
                 </form>
               </div>
-              <div>Hello</div>
+              <div>
+                {project.image_path && (
+                  <div>
+                    <img src={project.image_path} alt="" />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -150,4 +159,4 @@ function Create() {
   );
 }
 
-export default Create;
+export default Edit;

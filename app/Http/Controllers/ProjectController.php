@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,6 +29,7 @@ class ProjectController extends Controller
         if (request('status')) {
             $query->where('status', request('status'));
         }
+        $query->where('is_active', 1);
         $projects = $query->withCount('tasks')->orderBy($sortField, $sortDirection)->paginate(10);
         // return $projects;
         return inertia('Project/Index', [
@@ -94,7 +96,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        // dd($project);
+        return inertia("Project/Edit", [
+            'project' => new ProjectResource($project)
+        ]);
     }
 
     /**
@@ -102,7 +107,20 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+        $data['updated_by'] = Auth::user()->id;
+        // dd($data);
+        $image = $data['image'] ?? null;
+        if ($image) {
+            if ($project->image_path) {
+                $directory = dirname($project->image_path);
+                Storage::disk('public')->delete($project->image_path);
+                Storage::disk('public')->deleteDirectory($directory);
+            }
+            $data['image_path'] = $image->store('project-' . Str::random(), 'public');
+        }
+        $project->update($data);
+        return to_route('projects.index')->with('success', 'Project was updated successfully!');
     }
 
     /**
@@ -112,14 +130,14 @@ class ProjectController extends Controller
     {
         // dd($project);
         $name = $project->name;
-        $directory = dirname($project->image_path);
 
-        // Delete the image
-        Storage::disk('public')->delete($project->image_path);
-
-        // Delete the folder (if empty)
-        Storage::disk('public')->deleteDirectory($directory);
-        $project->delete();
+        // Delete
+        // $directory = dirname($project->image_path);
+        // Storage::disk('public')->delete($project->image_path);
+        // Storage::disk('public')->deleteDirectory($directory);
+        // $project->delete();
+        Task::where('project_id', $project->id)->update(['is_active' => 0]);
+        $project->update(['is_active' => 0]);
         return to_route('projects.index')->with('success', 'Project - ' . $name . ' was Deleted');
     }
 }

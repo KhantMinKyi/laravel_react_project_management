@@ -26,6 +26,7 @@ class TaskController extends Controller
         if (request('priority')) {
             $query->where('priority', request('priority'));
         }
+        $query->where('is_active', 1);
         $tasks = $query->with('project')->orderBy($sortField, $sortDirection)->paginate(10);
 
         return inertia('Task/Index', [

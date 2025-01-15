@@ -23,14 +23,14 @@ class TaskResource extends JsonResource
             'image_path' => $this->image_path,
             'status' => $this->status,
             'priority' => $this->priority,
-            'due_date' => (new Carbon($this->due_date))->format('d-m-Y'),
+            'due_date' => (new Carbon($this->due_date))->format('Y-m-d'),
             'assignedBy' => new UserResource($this->assignedBy),
             'assignedTo' => new UserResource($this->assignedTo),
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
             'project' => new ProjectResource($this->project),
             'is_active' => $this->is_active,
-            'created_at' => (new Carbon($this->created_at))->format('d-m-Y'),
+            'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
             // 'tasks_count' => $this->tasks_count
         ];
     }
