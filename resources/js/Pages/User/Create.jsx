@@ -21,19 +21,19 @@ function Create() {
     e.preventDefault();
     console.log(data);
 
-    post(route("projects.store"));
+    post(route("users.store"));
   };
   return (
     <AuthenticatedLayout
       header={
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            Create new Project
+            Create new User
           </h2>
         </div>
       }
     >
-      <Head title="Projects" />
+      <Head title="Users" />
       <div className="py-12">
         <div className="mx-auto  sm:px-6 lg:px-8">
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
@@ -44,7 +44,7 @@ function Create() {
                   className="p-4 sm-p8 bg-white dark:bg-gray-800 shadow:sm rounded-lg"
                 >
                   <div className="flex justify-end mr-2">
-                    <Link href={route("projects.create")}>
+                    <Link href={route("users.create")}>
                       <ArrowPathIcon
                         className="w-4 cursor-pointer"
                         title="Reset Inputs"
@@ -52,12 +52,9 @@ function Create() {
                     </Link>
                   </div>
                   <div>
-                    <InputLabel
-                      htmlFor="project_image_path"
-                      value="Project Image"
-                    />
+                    <InputLabel htmlFor="user_image_path" value="User Image" />
                     <TextInput
-                      id="project_image_path"
+                      id="user_image_path"
                       type="file"
                       name="image"
                       className="mt-1 block w-full "
@@ -66,9 +63,9 @@ function Create() {
                     <InputError message={errors.image} className="mt-2" />
                   </div>
                   <div className="mt-4">
-                    <InputLabel htmlFor="project_name" value="Project Name" />
+                    <InputLabel htmlFor="user_name" value="User Name" />
                     <TextInput
-                      id="project_name"
+                      id="user_name"
                       type="text"
                       name="name"
                       value={data.name}
@@ -79,11 +76,11 @@ function Create() {
                   </div>
                   <div className="mt-4">
                     <InputLabel
-                      htmlFor="project_description"
-                      value="Project Description"
+                      htmlFor="user_description"
+                      value="User Description"
                     />
                     <TextAreaInput
-                      id="project_description"
+                      id="user_description"
                       name="description"
                       value={data.description}
                       className="mt-1 block w-full"
@@ -92,12 +89,9 @@ function Create() {
                     <InputError message={errors.description} className="mt-2" />
                   </div>
                   <div className="mt-4">
-                    <InputLabel
-                      htmlFor="project_due_date"
-                      value="Project Deadline"
-                    />
+                    <InputLabel htmlFor="user_due_date" value="User Deadline" />
                     <TextInput
-                      id="project_due_date"
+                      id="user_due_date"
                       type="date"
                       name="due_date"
                       value={data.due_date}
@@ -107,12 +101,9 @@ function Create() {
                     <InputError message={errors.due_date} className="mt-2" />
                   </div>
                   <div className="mt-4">
-                    <InputLabel
-                      htmlFor="project_status"
-                      value="Project Status"
-                    />
+                    <InputLabel htmlFor="user_status" value="User Status" />
                     <SelectInput
-                      id="project_status"
+                      id="user_status"
                       name="status"
                       className="mt-1 block w-full"
                       onChange={(e) => setData("status", e.target.value)}
@@ -127,7 +118,7 @@ function Create() {
                   </div>
                   <div className="mt-4 text-right">
                     <Link
-                      href={route("projects.index")}
+                      href={route("users.index")}
                       className=" inline-block py-2 px-4 bg-red-600 text-white rounded shadow transition-all hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-600 mr-4"
                     >
                       Cancel

@@ -29,7 +29,8 @@ class ProjectController extends Controller
         if (request('status')) {
             $query->where('status', request('status'));
         }
-        $query->where('is_active', 1);
+        $query->where('is_active', 1)->where('created_by', Auth::user()->id);
+
         $projects = $query->withCount('tasks')->orderBy($sortField, $sortDirection)->paginate(10);
         // return $projects;
         return inertia('Project/Index', [

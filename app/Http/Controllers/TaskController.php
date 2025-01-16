@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -26,7 +27,7 @@ class TaskController extends Controller
         if (request('priority')) {
             $query->where('priority', request('priority'));
         }
-        $query->where('is_active', 1);
+        $query->where('is_active', 1)->where('assigned_to_user_id', Auth::user()->id);
         $tasks = $query->with('project')->orderBy($sortField, $sortDirection)->paginate(10);
 
         return inertia('Task/Index', [
